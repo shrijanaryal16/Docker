@@ -5,6 +5,7 @@
 import pandas as pd
 from sqlalchemy import create_engine
 from tqdm.auto import tqdm
+import click
 
 dtype = {
     "VendorID": "Int64",
@@ -78,16 +79,25 @@ def ingest_data(
 
 
 
-def main():
-    pg_user = 'root'
-    pg_pass = 'root'
-    pg_host = 'localhost'
-    pg_port = '5432'
-    pg_db = 'ny_taxi'
-    year = 2021
-    month = 1
-    chunksize = 100000
-    target_table = 'yellow_taxi_data'
+@click.command()
+@click.option('--pg-user', default='root', help='Postgres user')
+@click.option('--pg-pass', default='root', help='Postgres password')
+@click.option('--pg-host', default='localhost', help='Postgres host')
+@click.option('--pg-port', default='5432', help='Postgres port')
+@click.option('--pg-db', default='ny_taxi', help='Postgres database')
+@click.option('--year', default=2021, type=int, help='Year of the data file')
+@click.option('--month', default=1, type=int, help='Month of the data file')
+@click.option('--chunksize', default=100000, type=int, help='CSV reader chunksize')
+@click.option('--target-table', default='yellow_taxi_data', help='Target table name')
+def main(pg_user: str,
+         pg_pass: str,
+         pg_host: str,
+         pg_port: str,
+         pg_db: str,
+         year: int,
+         month: int,
+         chunksize: int,
+         target_table: str):
 
     engine = create_engine(f'postgresql://{pg_user}:{pg_pass}@{pg_host}:{pg_port}/{pg_db}')
     url_prefix = 'https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow'
