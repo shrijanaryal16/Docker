@@ -207,3 +207,24 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+
+*.csv
+*.csv.gz
+*.json
+
+.docker_volumes/
+ny_taxi_postgres_data/
+kestra_postgres_data/
+kestra_data/
+
+/tmp/kestra-wd/
+
+
+# Google Cloud Service Account Keys
+*-creds.json
+*credentials*.json
+service-account-*.json
+
+
